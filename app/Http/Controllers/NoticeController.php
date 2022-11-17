@@ -21,7 +21,7 @@ class NoticeController extends Controller
      */
     public function posts(Request $request)
     {
-        if (!empty($request->tag)) {
+        if (empty($request->tag)) {
             $notice = Notice::all();
         } else {
             $notice = Notice::where('tags', 'like', '%'.$request->tag.'%')->get();
@@ -35,9 +35,30 @@ class NoticeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+                    'title' => 'required|string|min:2',
+                    'authot' => 'required|string|min:6',
+                    'content' => 'required|string|min:6',
+                    'tags' => 'required|array',
+                ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $notice= new Notice();
+        $notice->title = $request->title;
+        $notice->author = $request->authot;
+        $notice->content= $request->content;
+        $notice->tags = $request->tags;
+        $notice->save();
+        $notice->id;
+
+        $dados = Notice::find($notice->id);
+
+        return response()->json($dados, 201)->header('Content-Type', 'application/json');
     }
 
     /**

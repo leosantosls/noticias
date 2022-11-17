@@ -33,4 +33,5 @@ Route::group([
 
     Route::get('/posts/{tag?}', [NoticeController::class, 'posts']);
     Route::post('/posts', [NoticeController::class, 'create']);
+    Route::put('/posts/{id}', [NoticeController::class, 'update']);
 });

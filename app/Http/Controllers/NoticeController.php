@@ -19,13 +19,13 @@ class NoticeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function posts()
+    public function posts(Request $request)
     {
-        $notice = Notice::all();
-
-        // return response()->json([
-        //     $notice
-        // ]);
+        if (!empty($request->tag)) {
+            $notice = Notice::all();
+        } else {
+            $notice = Notice::where('tags', 'like', '%'.$request->tag.'%')->get();
+        }
 
         return $notice->toJson();
     }

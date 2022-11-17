@@ -30,5 +30,5 @@ Route::group([
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
-    Route::get('/posts', [NoticeController::class, 'posts']);
+    Route::get('/posts/{tag?}', [NoticeController::class, 'posts']);
 });

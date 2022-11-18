@@ -8,11 +8,6 @@
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
                 <div class="card-body">
-                    <!-- @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif -->
 
                     <form method="POST" id="formulario" action="#" onsubmit="return validar()">
                         <input id="id" type="hidden" class="form-control" name="id" value="{{ old('id') }}" required autocomplete="id" autofocus>

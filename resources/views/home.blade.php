@@ -154,10 +154,14 @@
        $("#content").val(elem.data('content'));
 
        $("#btnAcao").text('Alterar');
+
+       $("#title").focus();
     }
 
     function validar(){
         var url = '/api/auth/posts';
+
+        id = $("#id").val();
 
         tags = $("#tags").val();
         tags = tags.split(",");
@@ -172,52 +176,81 @@
         data['content'] = content;
         data['tags'] = tags;
 
-        $.ajax({
-            url : url,
-            type : 'POST',
-            data : JSON.stringify(data),
-            contentType: 'application/json',
-            processData: false,
-            dataType: "json",
-            beforeSend : function(xhr){
-                if (sessionStorage.getItem("Bearentoken")) {
-                    xhr.setRequestHeader("Authorization", "Bearer " +  sessionStorage.getItem("Bearentoken"));
+        if(id > 0){
+            url = '/api/auth/posts/'+id;
+
+            $.ajax({
+                url : url,
+                type : 'PUT',
+                data : JSON.stringify(data),
+                contentType: 'application/json',
+                processData: false,
+                dataType: "json",
+                beforeSend : function(xhr){
+                    if (sessionStorage.getItem("Bearentoken")) {
+                        xhr.setRequestHeader("Authorization", "Bearer " +  sessionStorage.getItem("Bearentoken"));
+                    }
                 }
-            }
-       })
-       .done(function(data){
-            let tableTd = '';
-                tableTd += '<tr>';
-                    tableTd += '<td>'+
-                                    '<i onclick="editPosts($(this))"'+
-                                    ' data-id="'+data.id+'" '+
-                                    ' data-title="'+data.title+'" '+
-                                    ' data-author="'+data.author+'" '+
-                                    ' data-tags="'+data.tags+'" '+
-                                    ' data-content="'+data.content+'" '+
-                                    'class="fa-regular fa-pen-to-square"></i>'+
-                                    '  <i onclick="deletePosts('+data.id+')" class="fa-solid fa-trash"></i> </td>';
-                    tableTd += '<td>'+data.id+'</td>';
-                    tableTd += '<td>'+data.title+'</td>';
-                    tableTd += '<td>'+data.author+'</td>';
-                    tableTd += '<td>'+data.tags+'</td>';
-                    tableTd += '<td>'+data.content+'</td>';
-                tableTd += '</tr>';
+            })
+            .done(function(data){
+                listsPosts();
+                alert('Noticia Editada com sucesso!');
+            })
+            .fail(function(jqXHR, textStatus, msg){
+                    array = jqXHR.responseJSON;
 
-            $('#bodyNoticias').append(tableTd);
-
-            alert('Noticia Cadastrada com sucesso!');
-
-            limpar_campos();
-
-       })
-       .fail(function(jqXHR, textStatus, msg){
-            array = jqXHR.responseJSON;
-
-            Object.keys(array).forEach((item) => {
-                alert(array[item])
+                    Object.keys(array).forEach((item) => {
+                        alert(array[item])
+                    });
             });
-       });
+        }else{
+            $.ajax({
+                url : url,
+                type : 'POST',
+                data : JSON.stringify(data),
+                contentType: 'application/json',
+                processData: false,
+                dataType: "json",
+                beforeSend : function(xhr){
+                    if (sessionStorage.getItem("Bearentoken")) {
+                        xhr.setRequestHeader("Authorization", "Bearer " +  sessionStorage.getItem("Bearentoken"));
+                    }
+                }
+            })
+            .done(function(data){
+                let tableTd = '';
+                    tableTd += '<tr>';
+                        tableTd += '<td>'+
+                                        '<i onclick="editPosts($(this))"'+
+                                        ' data-id="'+data.id+'" '+
+                                        ' data-title="'+data.title+'" '+
+                                        ' data-author="'+data.author+'" '+
+                                        ' data-tags="'+data.tags+'" '+
+                                        ' data-content="'+data.content+'" '+
+                                        'class="fa-regular fa-pen-to-square"></i>'+
+                                        '  <i onclick="deletePosts('+data.id+')" class="fa-solid fa-trash"></i> </td>';
+                        tableTd += '<td>'+data.id+'</td>';
+                        tableTd += '<td>'+data.title+'</td>';
+                        tableTd += '<td>'+data.author+'</td>';
+                        tableTd += '<td>'+data.tags+'</td>';
+                        tableTd += '<td>'+data.content+'</td>';
+                    tableTd += '</tr>';
+
+                $('#bodyNoticias').append(tableTd);
+
+                alert('Noticia Cadastrada com sucesso!');
+            })
+            .fail(function(jqXHR, textStatus, msg){
+                    array = jqXHR.responseJSON;
+
+                    Object.keys(array).forEach((item) => {
+                        alert(array[item])
+                    });
+            });
+        }
+
+        limpar_campos();
+
 
        return false;
     }

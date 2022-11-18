@@ -21,3 +21,7 @@
     </div>
 </div>
 @endsection
+
+<script>
+    console.log(sessionStorage.getItem("Bearentoken"));
+</script>

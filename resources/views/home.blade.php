@@ -117,7 +117,7 @@
 
             let tableTd = '';
             for (let index = 0; index < data.length; index++) {
-                tableTd += '<tr>';
+                tableTd += '<tr id="posts-'+data[index].id+'">';
                     tableTd += '<td>'+
                                     '<i onclick="editPosts($(this))"'+
                                     ' data-id="'+data[index].id+'" '+
@@ -230,6 +230,29 @@
        $("#content").val('');
 
        $("#btnAcao").text('Adicionar');
+    }
+
+    function deletePosts(id){
+        var url = '/api/auth/posts/'+id;
+
+        if(confirm("Deseja excluir o registro selecionado?")){
+            $.ajax({
+                    url : url,
+                    type : 'DELETE',
+                    beforeSend : function(xhr){
+                        if (sessionStorage.getItem("Bearentoken")) {
+                            xhr.setRequestHeader("Authorization", "Bearer " +  sessionStorage.getItem("Bearentoken"));
+                        }
+                    },
+            })
+            .done(function(data){
+                    $("#posts-"+id).remove();
+                    alert('Registro Excluido com sucesso!');
+            })
+            .fail(function(jqXHR, textStatus, msg){
+
+            });
+        }
     }
 
 </script>

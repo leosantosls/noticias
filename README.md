@@ -10,6 +10,8 @@ A aplicação foi construída utilizando [Laravel v9.40.1](https://laravel.com/)
 + Após a criação do projeto, no Terminal você pode navegar até o diretório do aplicativo e gerar as Keys necessárias com os comandos abaixo:
 
 ```
+cp .env.example .env
+
 php artisan key:generate  
 
 php artisan jwt:secret 

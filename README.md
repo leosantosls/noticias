@@ -500,3 +500,34 @@ Exclui postagens antigas, é necessario informar o ID da postagem ao final da UR
            + Authorization (obrigatório)
            
 + Response 204
+
+
+# Interfaces da Aplicação 
+
+## Requisitos
+
++ Node
++ NPM
+
+## Configurações iniciais
++ Após a criação do projeto, no Terminal você pode navegar até o diretório do aplicativo e gerar as Keys necessárias com os comandos abaixo:
+
+```
+npm install --save-dev vite laravel-vite-plugin
+npm install --save-dev @vitejs/plugin-vue
+npm install --save lodash
+npm install postcss
+npm install sass
+```
+
++ Apos finalizar a instalação dos pacotes adicionais, no Terminal rode o seguinte comando
+
+```
+npm run dev
+```
+
+Podemos acessar as Interfaces da aplicação na Web pelas rotas:
+
+# Login de Usúario [/login]
+
+# Registro de Usúario [/register]

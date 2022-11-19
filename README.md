@@ -65,7 +65,7 @@ Essa ação iniciará a construção dos contêineres do Docker do aplicativo. A
     + Body
 
             {
-                "message": "Usúario registado com sucesso",
+                "message": "Usúario registrado com sucesso",
                 "user": {
                     "name": "Leonardo Santos",
                     "email": "devLeonardo@gmail.com",

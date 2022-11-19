@@ -202,7 +202,7 @@ Essa ação iniciará a construção dos contêineres do Docker do aplicativo. A
 
 # Refresh Token de Usúario [/api/auth/refresh]
 
-## Login [POST]
+## Refresh [POST]
 
 + Request
     +   Header
